@@ -1,5 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {Product} from '../../product';
+import {ProductService} from '../../product.service';
 
 @Component({
   selector: 'app-product-create',
@@ -9,10 +10,15 @@ import {Product} from '../../product';
 export class ProductCreateComponent implements OnInit {
   product: Product = {};
 
-  constructor() {
+  constructor(private productService: ProductService) {
   }
 
   ngOnInit() {
   }
 
+  createProduct() {
+    this.productService.save(this.product).subscribe(() => {
+      alert('success');
+    });
+  }
 }
