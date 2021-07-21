@@ -1,19 +1,31 @@
 <h3>Create product</h3>
 <a routerLink="">Back</a>
-<form (ngSubmit)="createProduct()">
+<form #productForm= "ngForm" (ngSubmit)="createProduct(productForm)">
   <table>
 
     <tr>
       <td>Name :</td>
-      <td><input type="text" name="name" [(ngModel)]="product.name"></td>
+      <td><input type="text" name="name" #name = "ngModel"  required minlength="6" [(ngModel)]="product.name"></td>
+      <td *ngIf="productForm.invalid && isSubmitted">
+        <p *ngIf="name.errors?.required">Phai dien</p>
+        <p *ngIf="name.errors?.minlength">It nhat 6 ki tu</p>
+      </td>
     </tr>
     <tr>
       <td>Price :</td>
-      <td><input type="number" name="price" [(ngModel)]="product.price"></td>
+      <td><input type="text" name="price" #price="ngModel" required minlength="4" [(ngModel)]="product.price"></td>
+      <td *ngIf="productForm.invalid && isSubmitted">
+        <p *ngIf="price.errors?.required">Khong de trong</p>
+        <p *ngIf="price.errors?.minlength">4 ki tu moi dung</p>
+      </td>
     </tr>
     <tr>
       <td>Description :</td>
-      <td><input type="text" name="description" [(ngModel)]="product.description"></td>
+      <td><input type="text" name="description" #description="ngModel" required pattern="^[0-9]{1,}$" [(ngModel)]="product.description"></td>
+      <td *ngIf="productForm.invalid && isSubmitted">
+        <p *ngIf="description.errors?.required">Khong de trong</p>
+        <p *ngIf="description.errors?.pattern">Du lieu khong dung,chi viet so thoi</p>
+      </td>
     </tr>
     <tr>
       <td></td>

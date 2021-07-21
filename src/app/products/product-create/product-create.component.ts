@@ -9,6 +9,7 @@ import {ProductService} from '../../product.service';
 })
 export class ProductCreateComponent implements OnInit {
   product: Product = {};
+  isSubmitted = false;
 
   constructor(private productService: ProductService) {
   }
@@ -16,9 +17,14 @@ export class ProductCreateComponent implements OnInit {
   ngOnInit() {
   }
 
-  createProduct() {
-    this.productService.save(this.product).subscribe(() => {
-      alert('success');
-    });
+  createProduct(productForm) {
+    this.isSubmitted = true;
+    if (productForm.valid) {
+      this.productService.save(productForm.value).subscribe(() => {
+        alert('success');
+      });
+    } else {
+      alert('Dau vao du lieu khong dung');
+    }
   }
 }
